@@ -1,0 +1,40 @@
+.app-toolbar {
+    height: 48px;
+    position: fixed;
+
+    z-index: 2147483647;
+}
+
+.app-logo {
+    height: 48px;
+
+    margin-left: 16px;
+    margin-right: 8px;
+
+    cursor: pointer;
+}
+
+.app-name {
+    height: 24px;
+
+    cursor: pointer;
+}
+
+.app-dark-light {
+    margin-left: 16px;
+}
+
+.app-content {
+    min-width: 100vw;
+    min-height: calc(100vh - 48px);
+
+    position: absolute;
+    margin-top: 48px;
+
+    overflow: hidden;
+}
+
+.app-drawer {
+    position: fixed;
+    margin-top: 48px;
+}

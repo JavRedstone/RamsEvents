@@ -1,0 +1,122 @@
+<mat-icon class="ranking-icon">military_tech</mat-icon>
+<h1 class="ranking-title">Rankings</h1>
+<p class="ranking-description">Student rankings</p>
+<mat-divider></mat-divider>
+<div class="ranking-years">
+    <mat-form-field class="ranking-form-field" appearance = "outline" color="accent">
+        <mat-label>Select school year</mat-label>
+        <mat-select [(value)] = "searchYear" (selectionChange) = "onSubmit()">
+            <mat-option *ngFor="let option of years" [value]="option">{{ option }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="ranking-form-field" appearance = "outline" color="accent">
+        <mat-label>Select school year quarter</mat-label>
+        <mat-select [(value)] = "searchQuarter" (selectionChange) = "onSubmit()">
+            <mat-option *ngFor="let option of quarters" [value]="option">Quarter {{ option }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<mat-divider></mat-divider>
+
+<div>
+    <mat-form-field class="ranking-form-field" appearance = "outline">
+        <mat-label>Select search criteria</mat-label>
+        <mat-select [(value)] = "searchOption" (selectionChange) = "clearFormFields()">
+            <mat-option *ngFor="let option of SEARCH_OPTIONS" [value]="option.value">{{ option.description }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<form [formGroup] = "searchFormGroup" (submit) = "onSubmit()">
+    <ng-container *ngIf="searchOption == '0'">
+        <div>
+            <button class="ranking-button" mat-flat-button color="primary">Search</button>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="searchOption == '1'">
+        <mat-form-field class="ranking-form-field">
+            <mat-label>First Name</mat-label>
+            <input #firstNameInput matInput formControlName = "firstName" autocomplete = "off" type="text">
+            </mat-form-field>
+        <div>
+            <mat-form-field class="ranking-form-field">
+                <mat-label>Last Name</mat-label>
+                <input #lastNameInput matInput formControlName = "lastName" autocomplete = "off" type="text">
+            </mat-form-field>
+        </div>
+        <div>
+            <button class="ranking-button" mat-flat-button color="primary">Search</button>
+            <mat-error *ngIf="firstNameInput.value == '' && lastNameInput.value == '' && (searchFormGroup.dirty || searchFormGroup.touched)">
+                First name or last name is <strong>required</strong>
+            </mat-error>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="searchOption == '3'">
+        <mat-form-field class="ranking-form-field" (submit) = "onSubmit()">
+            <mat-label>Grade <strong>(Numeric, Exactly Matched)</strong></mat-label>
+            <input #gradeInput matInput formControlName = "grade" autocomplete = "off" type="text" pattern="\d*" maxlength="2">
+            <mat-hint align="end">{{ gradeInput.value.length }} / 2</mat-hint>
+        </mat-form-field>
+        <div>
+            <button class="ranking-button" mat-flat-button color="primary">Search</button>
+            <mat-error *ngIf="gradeInput.value != '' && gradeInput.value != '9' && gradeInput.value != '10' && gradeInput.value != '11' && gradeInput.value != '12' && (searchFormGroup.dirty || searchFormGroup.touched)">
+                Points Earned can only be from <strong>9 - 12</strong>
+            </mat-error>
+            <mat-error *ngIf="grade.errors?.['pattern'] && (searchFormGroup.dirty || searchFormGroup.touched)">
+                Grade can only be a <strong>numeric</strong>
+            </mat-error>
+            <mat-error *ngIf="gradeInput.value == '' && (searchFormGroup.dirty || searchFormGroup.touched)">
+                Grade is is <strong>required</strong>
+            </mat-error>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="searchOption == '4'">
+        <mat-form-field class="ranking-form-field" (submit) = "onSubmit()">
+            <mat-label>Points Earned <strong>(Numeric, Minimum)</strong></mat-label>
+            <input #pointsEarnedInput matInput formControlName = "pointsEarned" autocomplete = "off" type="text" pattern="\d*" maxlength="5">
+            <mat-hint align="end">{{pointsEarnedInput.value.length}} / 3</mat-hint>
+        </mat-form-field>
+        <div>
+            <button class="ranking-button" mat-flat-button color="primary">Search</button>
+            <mat-error *ngIf="pointsEarned.errors?.['pattern'] && (searchFormGroup.dirty || searchFormGroup.touched)">
+                Points Earned can only be a <strong>numeric</strong>
+            </mat-error>
+            <mat-error *ngIf="pointsEarnedInput.value == '' && (searchFormGroup.dirty || searchFormGroup.touched)">
+                Points Earned is <strong>required</strong>
+            </mat-error>
+        </div>
+    </ng-container>
+</form>
+<div class="ranking-table">
+    <mat-form-field>
+        <mat-label>Filter results</mat-label>
+        <input matInput (keyup)="applyFilter($event)" autocomplete="off">
+    </mat-form-field>
+    <button class="ranking-rules-button" mat-flat-button color="accent" (click)="showPrizes()">Prizes</button>
+    <button class="ranking-rules-button" mat-flat-button color="accent" (click)="generateReport()">
+        <mat-icon>picture_as_pdf</mat-icon>
+        Generate Report
+    </button>
+    <button class="ranking-rules-button" mat-flat-button color="accent" (click)="grantPrizes()" *ngIf="currentUser.accessLevel == 'high'">Grant Prizes</button>
+    <table mat-table [dataSource]="rankingInfoList" matSort>
+        <ng-container *ngFor="let column of COLUMNS" [matColumnDef]="column.def">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.name }}</th>
+            <td mat-cell *matCellDef="let row">
+                <div *ngIf = "isBoolean(row[column.def])">
+                    <mat-icon *ngIf="row[column.def]">workspace_premium</mat-icon>
+                </div>
+                <div *ngIf = "!isBoolean(row[column.def])">{{ row[column.def] }}</div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="COLUMN_DEF"></tr>
+        <tr mat-row *matRowDef="let row; columns: COLUMN_DEF;"></tr>
+
+        <tr *matNoDataRow>
+            <td class = "ranking-nodata" colspan="10">No data matches this filter.</td>
+        </tr>
+    </table>
+    
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" pageSize="10"></mat-paginator>
+</div>

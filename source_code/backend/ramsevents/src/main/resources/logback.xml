@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<springProperty scope="context" name="LOG_LOCATION"
+		source="LOG_LOCATION" />
+
+	<property name="HOME_LOG" value="${LOG_LOCATION}/app.log" />
+	
+	<appender name="RollingFile"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_LOCATION}/app.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${LOG_LOCATION}/app.%i.log.zip</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>10</maxIndex>
+		</rollingPolicy>
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>1MB</maxFileSize>
+		</triggeringPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSSXXX, "America/Toronto"} [%thread]
+				%-5level %logger{50} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="Console"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss.SSSXXX, "America/Toronto"} [%thread]
+				%-5level %logger{50} - %msg%n
+			</Pattern>
+		</layout>
+	</appender>
+
+	<logger name="com.jav.ramsevents.repository" level="ERROR" additivity="false">
+		<appender-ref ref="Console" />
+		<appender-ref ref="RollingFile" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="Console" />
+		<appender-ref ref="RollingFile" />
+	</root>
+</configuration>

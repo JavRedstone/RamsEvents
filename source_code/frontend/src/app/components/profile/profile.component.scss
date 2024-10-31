@@ -1,0 +1,22 @@
+.profile-title {
+    text-align: center;
+}
+
+.profile-description {
+    text-align: center;
+}
+
+.profile-icon {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    margin-left: 50%;
+    margin-top: 20px;
+    transform: translate(-50%);
+    font-size: 100px;
+    opacity: 0.3;
+}
+
+.profile-card {
+    margin: 12px;
+}

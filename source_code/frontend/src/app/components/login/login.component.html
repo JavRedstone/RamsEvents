@@ -1,0 +1,3 @@
+<button mat-flat-button color = "primary" *ngIf = "getCurrentUser() == null" (click) = "login()">Login</button>
+<strong *ngIf="getCurrentUser() != null">Welcome, {{ getCurrentUser().firstName }}</strong>
+<button mat-flat-button color = "primary" *ngIf = "getCurrentUser() != null" (click) = "logout(true)">Logout</button>

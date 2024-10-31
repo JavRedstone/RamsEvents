@@ -1,0 +1,36 @@
+<mat-dialog-content>
+    <h1 class="club-details-title">Club Details</h1>
+    <p class="club-details-description">Detailed View of a Club</p>
+    <mat-divider></mat-divider>
+    <mat-card class="club-details-card">
+        <mat-card-header>
+            <mat-card-title>
+                <h2>{{ data.club.clubName }}</h2>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-list>
+                <div mat-subheader><strong>Club Info</strong></div>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>description</mat-icon>
+                    <div matListItemTitle>Club Description</div>
+                    <div matListItemLine>{{ data.club.description}}</div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>star</mat-icon>
+                    <div matListItemTitle>Leader Name</div>
+                    <div matListItemLine>{{ data.club.leaderName }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>alternate_email</mat-icon>
+                    <div matListItemTitle>Leader Email</div>
+                    <div matListItemLine>{{ data.club.email }}</div>
+                </mat-list-item>
+              </mat-list>
+        </mat-card-content>
+    </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-flat-button matDialogClose color="primary" (click)="addEvent()" *ngIf="data.add">Add Event</button>
+    <button mat-button matDialogClose>Close</button>
+</mat-dialog-actions>

@@ -1,0 +1,22 @@
+<mat-dialog-content>
+    <h1>{{ data.type }}</h1>
+    <p [innerHTML]="data.message"></p>
+    <div *ngIf="deleteEventError">
+        <mat-error>You cannot delete this event because there are students who have joined it.</mat-error>
+        <mat-error>Please request them to leave the event before deleting it.</mat-error>
+        <mat-error>These students are:</mat-error>
+    </div>        
+    <mat-list>
+        <mat-list-item *ngFor="let student of deleteEventErrorStudents">
+            Name: {{ student.firstName }} {{ student.lastName }} | Email: {{ student.email }}
+        </mat-list-item>
+    </mat-list>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-flat-button color = "primary" matDialogClose (click) = "joinEvent()" *ngIf="data.type == 'Join Event'">Join Event</button>
+    <button mat-flat-button color = "warn" matDialogClose (click) = "leaveEvent()" *ngIf="data.type == 'Leave Event'">Leave Event</button>
+    <button mat-flat-button color = "accent" matDialogClose (click) = "addEvent()" *ngIf="data.type == 'Add Event'">Add Event</button>
+    <button mat-flat-button color = "primary" matDialogClose (click) = "updateEvent()" *ngIf="data.type == 'Update Event'">Update Event</button>
+    <button mat-flat-button color = "warn" (click) = "deleteEvent()" *ngIf="data.type == 'Delete Event'" [disabled]="deleteEventError">Delete Event</button>
+    <button mat-button matDialogClose>Cancel</button>
+</mat-dialog-actions>

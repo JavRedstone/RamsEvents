@@ -1,0 +1,50 @@
+.ranking-title {
+    text-align: center;
+}
+
+.ranking-description {
+    text-align: center;
+}
+
+.ranking-icon {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    margin-left: 50%;
+    margin-top: 20px;
+    transform: translate(-50%);
+    font-size: 100px;
+    opacity: 0.3;
+}
+
+.ranking-years {
+    text-align: center;
+}
+
+.ranking-form-field {
+    width: 325px;
+    margin: 12px;
+    margin-bottom: 0;
+}
+
+.ranking-table {
+    margin: 12px;
+}
+
+.ranking-nodata {
+    text-align: center;
+}
+
+.ranking-button {
+    height: 36px;
+    margin: 12px;
+    font-size: 18px;
+    border-radius: 18px !important;
+}
+
+.ranking-rules-button {
+    height: 36px;
+    margin: 12px;
+    font-size: 18px;
+    border-radius: 18px !important;
+}

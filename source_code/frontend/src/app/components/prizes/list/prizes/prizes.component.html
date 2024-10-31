@@ -1,0 +1,49 @@
+<mat-dialog-content>
+    <h1 class="prizes-title prizes-level">Prizes</h1>
+    <p class="prizes-description"><strong>Prize rules and details for {{ data.schoolYear }}, quarter {{ data.quarter }}</strong></p>
+    <mat-card class="prizes-card">
+        <mat-card-content>
+            <h3 class="prizes-level">Here the prize rules:</h3>
+            <dl>
+                <dt>1. At the end of each quarter, prizes are distributed</dt>
+                <dt>2. You must meet the minimum point requirement for the prize to get it</dt>
+                <dt>3. Prizes are distributed like so:</dt>
+                <dd>- A top winner is selected with the highest points</dd>
+                <dd>- If two students have the same number of points, both are awarded prizes</dd>
+                <dd>- The top winner(s) will be awarded a prize based on the points that they have earned</dd>
+                <dd>- Next, one random winner from each grade is assigned a prize</dd>
+                <dd>- Those random winners must have at least participated in one event</dd>
+                <dd>- The random winners will also be awarded a prize based on the points that they have earned</dd>
+            </dl>
+            <div *ngFor="let prize of data.prizes">
+                <mat-divider></mat-divider>
+                <mat-list>
+                    <div class="prizes-level" mat-subheader><strong>Prize Level {{ data.prizes.indexOf(prize) + 1 }}</strong></div>
+                    <mat-list-item>
+                        <mat-icon matListItemIcon>workspace_premium</mat-icon>
+                        <div matListItemTitle>Prize Name</div>
+                        <div matListItemLine>{{ prize.name}}</div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon matListItemIcon>fact_check</mat-icon>
+                        <div matListItemTitle>Prize Description</div>
+                        <div matListItemLine>{{ prize.description}}</div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon matListItemIcon>format_quote</mat-icon>
+                        <div matListItemTitle>Prize Type</div>
+                        <div matListItemLine>{{ prize.type}}</div>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon matListItemIcon>hub</mat-icon>
+                        <div matListItemTitle>Minimum Points (Earned for Participation)</div>
+                        <div matListItemLine>{{ prize.minPoints }}</div>
+                    </mat-list-item>
+                </mat-list>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button matDialogClose>Close</button>
+</mat-dialog-actions>

@@ -1,0 +1,46 @@
+<mat-icon class="profile-icon">account_circle</mat-icon>
+<h1 class="profile-title">Profile</h1>
+<p class="profile-description">Your Account Profile</p>
+<mat-divider></mat-divider>
+<mat-card class="profile-card">
+    <mat-card-header>
+        <mat-card-title><strong>{{ currentUser.firstName }} {{ currentUser.middleName }} {{ currentUser.lastName }}</strong></mat-card-title>
+        <mat-card-subtitle>Student Id: {{ currentUser.studentId }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-list>
+            <div mat-subheader><strong>Student Info</strong></div>
+            <mat-list-item>
+                <mat-icon matListItemIcon>mail</mat-icon>
+                <div matListItemTitle>Email</div>
+                <div matListItemLine>{{ currentUser.email}}</div>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon matListItemIcon>school</mat-icon>
+                <div matListItemTitle>Grade</div>
+                <div matListItemLine>{{ currentUser.grade}}</div>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon matListItemIcon>meeting_room</mat-icon>
+                <div matListItemTitle>Homeroom</div>
+                <div matListItemLine>{{ currentUser.grade }}{{ currentUser.homeroom }}</div>
+            </mat-list-item>
+            <div mat-subheader><strong>Group Info</strong></div>
+            <mat-list-item>
+                <mat-icon matListItemIcon>groups</mat-icon>
+                <div matListItemTitle>Group Name</div>
+                <div matListItemLine>{{ currentUser.groupName }}</div>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon matListItemIcon>diversity_2</mat-icon>
+                <div matListItemTitle>Group Description</div>
+                <div matListItemLine>{{ currentUser.groupDescription }}</div>
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon matListItemIcon>accessibility_new</mat-icon>
+                <div matListItemTitle>Access Level</div>
+                <div matListItemLine>{{ currentUser.accessLevel }}</div>
+            </mat-list-item>
+          </mat-list>
+    </mat-card-content>
+</mat-card>

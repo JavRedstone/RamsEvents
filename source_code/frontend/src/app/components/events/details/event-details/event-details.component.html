@@ -1,0 +1,48 @@
+<mat-dialog-content>
+    <h1 class="event-details-title">Event Details</h1>
+    <p class="event-details-description">Detailed View of an Event</p>
+    <mat-divider></mat-divider>
+    <mat-card class="event-details-card">
+        <mat-card-header>
+            <mat-card-title>
+                <h2>{{ data.event.eventName }}</h2>
+            </mat-card-title>
+            <mat-card-subtitle>Hosted by: {{ data.event.clubName }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-list>
+                <div mat-subheader><strong>Event Info</strong></div>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>celebration</mat-icon>
+                    <div matListItemTitle>Event Description</div>
+                    <div matListItemLine>{{ data.event.description}}</div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>adjust</mat-icon>
+                    <div matListItemTitle>Minimum Points (Earned for Participation)</div>
+                    <div matListItemLine>{{ data.event.minPoints }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>group_work</mat-icon>
+                    <div matListItemTitle>Maximum Points (Decided by Hosters)</div>
+                    <div matListItemLine>{{ data.event.maxPoints }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>today</mat-icon>
+                    <div matListItemTitle>Start Date</div>
+                    <div matListItemLine>{{ data.event.startDate | date: 'short' }}</div>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon matListItemIcon>event</mat-icon>
+                    <div matListItemTitle>End Date</div>
+                    <div matListItemLine>{{ data.event.endDate | date: 'short' }}</div>
+                </mat-list-item>
+              </mat-list>
+        </mat-card-content>
+    </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-flat-button matDialogClose color="primary" (click)="joinEvent()" *ngIf="data.join">Join Event</button>
+    <button mat-flat-button matDialogClose color="warn" (click)="leaveEvent()" *ngIf="data.leave">Leave Event</button>
+    <button mat-button matDialogClose>Close</button>
+</mat-dialog-actions>

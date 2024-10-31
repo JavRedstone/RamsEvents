@@ -1,0 +1,44 @@
+<div class = "mat-app-background" [ngClass] = "isDark ? 'dark-theme' : ''">
+    <mat-toolbar class = "app-toolbar">
+        <button mat-icon-button (click) = "iconOnly = !iconOnly">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <img class = "app-logo" (click) = "redirectTo('/')" src = "./assets/rams-events-logo.svg">
+        <h2>Rams Events</h2>
+        <button class = "app-dark-light" mat-icon-button (click) = "darkLight()">
+            <mat-icon>{{ isDark ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        </button>
+        <app-login></app-login>
+    </mat-toolbar>
+    <mat-drawer-container class = "app-content" autosize>
+        <mat-drawer class = "app-drawer" #appDrawer mode = "side" opened>
+            <mat-selection-list multiple = "false" [style.width] = "iconOnly ? '56px' : 'auto'">
+                <!-- To select the home page as the default route -->
+                <mat-list-option (click) = "redirectTo('/')" [selected]="true">
+                    <mat-icon matListItemIcon>home</mat-icon>
+                    Home
+                </mat-list-option>
+                <div *ngIf="getAuth()">
+                    <mat-list-option (click) = "redirectTo('/events')" [selected]="isBasePath('events')">
+                        <mat-icon matListItemIcon>celebration</mat-icon>
+                        Events
+                    </mat-list-option>
+                    <mat-list-option (click) = "redirectTo('/clubs')" [selected]="isBasePath('clubs')">
+                        <mat-icon matListItemIcon>groups</mat-icon>
+                        Clubs
+                    </mat-list-option>
+                    <mat-list-option (click) = "redirectTo('/rankings')" [selected]="isBasePath('rankings')">
+                        <mat-icon matListItemIcon>military_tech</mat-icon>
+                        Rankings
+                    </mat-list-option>
+                    <mat-list-option (click) = "redirectTo('/profile')" [selected]="isBasePath('profile')">
+                        <mat-icon matListItemIcon>account_circle</mat-icon>
+                        Profile
+                    </mat-list-option>
+                </div>
+            </mat-selection-list>
+        </mat-drawer>
+        <app-home *ngIf="isBasePath('')"></app-home>
+        <router-outlet *ngIf="getAuth()"></router-outlet>
+    </mat-drawer-container>
+</div>

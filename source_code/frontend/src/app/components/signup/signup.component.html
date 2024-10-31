@@ -1,0 +1,82 @@
+<mat-dialog-content>
+    <h1 class="signup-title">Signup</h1>
+    <p class="signup-description">Signup to Rams Events</p>
+    <mat-card class="signup-card">
+        <mat-card-content>
+            <form [formGroup] = "signupFormGroup">                
+                <div>
+                    <mat-form-field class="signup-form-field">
+                        <mat-label>First Name</mat-label>
+                        <textarea #firstNameInput matInput formControlName = "firstName" autocomplete = "off"></textarea>
+                    </mat-form-field>
+                    <mat-error *ngIf="firstNameInput.value == '' && (firstName.dirty || firstName.touched)">
+                        First Name is <strong>required</strong>
+                    </mat-error>
+                </div>
+
+                <div>
+                    <mat-form-field class="signup-form-field">
+                        <mat-label>Middle Name</mat-label>
+                        <textarea #middleNameInput matInput formControlName = "middleName" autocomplete = "off"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field class="signup-form-field">
+                        <mat-label>Last Name</mat-label>
+                        <textarea #lastNameInput matInput formControlName = "lastName" autocomplete = "off"></textarea>
+                    </mat-form-field>
+                    <mat-error *ngIf="lastNameInput.value == '' && (lastName.dirty || lastName.touched)">
+                        Last Name is <strong>required</strong>
+                    </mat-error>
+                </div>
+
+                <div>
+                    <mat-form-field class="signup-form-field">
+                        <mat-label>Student Id <strong>(Numeric)</strong></mat-label>
+                        <input #studentIdInput matInput formControlName = "studentId" autocomplete = "off" type="text" pattern="\d*" maxlength="7">
+                        <mat-hint align="end"> {{ studentIdInput.value.length }} / 7</mat-hint>
+                    </mat-form-field>
+                    <mat-error *ngIf="studentId.errors?.['pattern'] && (studentId.dirty || studentId.touched)">
+                        Student Id can only be a <strong>numeric</strong>
+                    </mat-error>
+                    <mat-error *ngIf="studentIdInput.value.charAt(0) == '0' && (studentId.dirty || studentId.touched)">
+                        Student Id cannot start with 0
+                    </mat-error>
+                    <mat-error *ngIf="studentIdInput.value == '' && (studentId.dirty || studentId.touched)">
+                        Student Id is <strong>required</strong>
+                    </mat-error>
+                </div>
+                
+                <div>
+                    <mat-form-field class="signup-form-field">
+                        <mat-label>Grade <strong>(Numeric)</strong></mat-label>
+                        <input #gradeInput matInput formControlName = "grade" autocomplete = "off" type="text" pattern="\d*" maxlength="2">
+                        <mat-hint align="end"> {{ gradeInput.value.length }} / 2</mat-hint>
+                    </mat-form-field>
+                    <mat-error *ngIf="grade.errors?.['pattern'] && (grade.dirty || grade.touched)">
+                        Grade can only be a <strong>numeric</strong>
+                    </mat-error>
+                    <mat-error *ngIf="gradeInput.value == '' && (grade.dirty || grade.touched)">
+                        Grade is <strong>required</strong>
+                    </mat-error>
+                </div>
+                
+                <div>
+                    <mat-form-field class="signup-form-field">
+                        <mat-label>Homeroom</mat-label>
+                        <textarea #homeroomInput matInput formControlName = "homeroom" autocomplete = "off" maxlength="1"></textarea>
+                        <mat-hint align="end"> {{ homeroomInput.value.length }} / 1</mat-hint>
+                        <mat-error *ngIf="homeroomInput.value == '' && (homeroom.dirty || homeroom.touched)">
+                            Homeroom is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-flat-button matDialogClose color="primary" (click)="signup()">Signup</button>
+    <button mat-button matDialogClose>Close</button>
+</mat-dialog-actions>

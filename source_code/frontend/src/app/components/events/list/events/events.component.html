@@ -1,0 +1,169 @@
+<mat-icon class="events-icon">celebration</mat-icon>
+<h1 class="events-title">Events</h1>
+<p class="events-description">Student Events</p>
+<mat-divider></mat-divider>
+<div class="events-years">
+    <mat-form-field class="events-form-field" appearance = "outline" color="accent">
+        <mat-label>Select school year</mat-label>
+        <mat-select [(value)] = "searchYear" (selectionChange) = "onSubmit()">
+            <mat-option *ngFor="let option of years" [value]="option">{{ option }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="events-form-field" appearance = "outline" color="accent">
+        <mat-label>Select school year quarter</mat-label>
+        <mat-select [(value)] = "searchQuarter" (selectionChange) = "onSubmit()">
+            <mat-option *ngFor="let option of quarters" [value]="option">Quarter {{ option }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<mat-divider></mat-divider>
+
+<div>
+    <mat-form-field class="events-form-field" appearance = "outline">
+        <mat-label>Select search criteria</mat-label>
+        <mat-select [(value)] = "searchOption" (selectionChange) = "clearFormFields()">
+            <mat-option *ngFor="let option of SEARCH_OPTIONS" [value]="option.value">{{ option.description }}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<form [formGroup] = "searchFormGroup" (submit) = "onSubmit()">
+    <ng-container *ngIf="searchOption == '0'">
+        <div>
+            <button class="events-button" class="events-submit" mat-flat-button class="events-button" color="primary">Search</button>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="searchOption == '1'">
+        <mat-form-field class="events-form-field" (submit) = "onSubmit()">
+            <mat-label>Event Name</mat-label>
+            <input #eventNameInput matInput formControlName = "eventName" autocomplete = "off">
+        </mat-form-field>
+        <div>
+            <button class="events-button" class="events-submit" mat-flat-button class="events-button" color="primary">Search</button>
+            <mat-error *ngIf="eventNameInput.value == '' && (searchFormGroup.dirty || searchFormGroup.touched)">
+                Event Name is <strong>required</strong>
+            </mat-error>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="searchOption == '2'">
+        <mat-form-field class="events-form-field" (submit) = "onSubmit()">
+            <mat-label>Minimum Points <strong>(Numeric)</strong></mat-label>
+            <input #minPointsInput matInput formControlName = "minPoints" autocomplete = "off" type="text" pattern="\d*" maxlength="1">
+            <mat-hint align="end">{{ minPointsInput.value.length }} / 1</mat-hint>
+        </mat-form-field>
+        <div>
+            <button class="events-button" class="events-submit" mat-flat-button class="events-button" color="primary">Search</button>
+            <mat-error *ngIf="minPoints.errors?.['pattern'] && (searchFormGroup.dirty || searchFormGroup.touched)">
+                Minimum Points can only be a <strong>numeric</strong>
+            </mat-error>
+            <mat-error *ngIf="minPointsInput.value == '' && (searchFormGroup.dirty || searchFormGroup.touched)">
+                Minimum Points is <strong>required</strong>
+            </mat-error>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="searchOption == '3'">
+        <mat-form-field class="events-form-field" (submit) = "onSubmit()">
+            <mat-label>Club Name</mat-label>
+            <input #clubNameInput matInput formControlName = "clubName" autocomplete = "off">
+        </mat-form-field>
+        <div>
+            <button class="events-button" class="events-submit" mat-flat-button class="events-button" color="primary">Search</button>
+            <mat-error *ngIf="clubNameInput.value == '' && (searchFormGroup.dirty || searchFormGroup.touched)">
+                Club Name is <strong>required</strong>
+            </mat-error>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="searchOption == '5'">
+        <mat-form-field class="events-form-field" (submit) = "onSubmit()">
+            <mat-label>End Date</mat-label>
+            <input #endDateInput matInput [matDatepicker]="endDatePicker" formControlName = "endDate" autocomplete="false">
+            <mat-hint>mm/dd/yyyy</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #endDatePicker></mat-datepicker>
+        </mat-form-field>
+        <div>
+            <button class="events-button" class="events-submit" mat-flat-button class="events-button" color="primary">Search</button>
+            <mat-error *ngIf="endDate.errors?.['pattern'] && (searchFormGroup.dirty || searchFormGroup.touched)">
+                End Date can only be a <strong>date</strong>
+            </mat-error>
+            <mat-error *ngIf="endDateInput.value == '' && (searchFormGroup.dirty || searchFormGroup.touched)">
+                End Date is <strong>required</strong>
+            </mat-error>
+        </div>
+    </ng-container>
+</form>
+<div class="events-table">
+    <mat-form-field>
+        <mat-label>Filter results</mat-label>
+        <input matInput (keyup)="applyFilter($event)" autocomplete="off">
+    </mat-form-field>
+    <mat-button-toggle-group class="events-table" [(value)]="toggleJoinedValue" (change)="onToggleJoined($event)" *ngIf="currentUser.accessLevel != 'high'">
+        <mat-button-toggle value="all">All</mat-button-toggle>
+        <mat-button-toggle value="joined">Joined</mat-button-toggle>
+        <mat-button-toggle value="not joined">Not Joined</mat-button-toggle>
+    </mat-button-toggle-group>
+    <mat-button-toggle-group class="events-table" [(value)]="toggleOwnedValue" (change)="onToggleOwned($event)" *ngIf="currentUser.accessLevel == 'medium'">
+        <mat-button-toggle value="all">All</mat-button-toggle>
+        <mat-button-toggle value="owned">Host</mat-button-toggle>
+        <mat-button-toggle value="not owned">Not Host</mat-button-toggle>
+    </mat-button-toggle-group>
+    <table mat-table [dataSource]="eventsInfoList" matSort>
+        <ng-container *ngFor="let column of COLUMNS" [matColumnDef]="column.def">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column.name }}</th>
+            <td mat-cell *matCellDef="let row">
+                <div *ngIf="column.def == 'joined'">
+                    <mat-icon *ngIf="joinedEventsIds.includes(row.eid)">check</mat-icon>
+                    <mat-icon *ngIf="!joinedEventsIds.includes(row.eid)">close</mat-icon>
+                </div>
+                <div *ngIf="column.def == 'owned' && currentUser.accessLevel != 'low'">
+                    <mat-icon *ngIf="ownedEventsIds.includes(row.eid)">check</mat-icon>
+                    <mat-icon *ngIf="!ownedEventsIds.includes(row.eid)">close</mat-icon>
+                </div>
+                <div *ngIf="column.def != 'joined' && column.def != 'owned'">
+                    <div *ngIf = "isDate(row[column.def])">{{ row[column.def] | date: 'shortDate' }}</div>
+                    <div *ngIf = "!isDate(row[column.def])">
+                        <button mat-icon-button *ngIf = "column.def == 'actions'" [matMenuTriggerFor]="eventsActionsMenu" [matMenuTriggerData]="{ eid: row.eid }">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <div *ngIf = "column.def != 'actions'">{{ shorten(row[column.def]) }}</div>
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="COLUMN_DEF"></tr>
+        <tr mat-row *matRowDef="let row; columns: COLUMN_DEF;"></tr>
+
+        <tr *matNoDataRow>
+            <td class = "events-nodata" colspan="10">No data matches this filter.</td>
+        </tr>
+    </table>
+    
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+<mat-menu #eventsActionsMenu="matMenu">
+    <ng-template matMenuContent let-eid="eid">
+        <button mat-menu-item (click)="joinEvent(eid)" *ngIf="!joinedEventsIds.includes(eid) && !ownedEventsIds.includes(eid)">
+            <mat-icon>add_task</mat-icon>
+            <span>Join</span>
+        </button>
+        <button mat-menu-item (click)="leaveEvent(eid)" *ngIf="joinedEventsIds.includes(eid)">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Leave</span>
+        </button>
+        <button mat-menu-item (click)="updateEvent(eid)" *ngIf="ownedEventsIds.includes(eid)">
+            <mat-icon>edit</mat-icon>
+            <span>Update</span>
+        </button>
+        <button mat-menu-item (click)="deleteEvent(eid)" *ngIf="ownedEventsIds.includes(eid)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+        </button>
+        <button mat-menu-item (click)="viewEvent(eid)">
+            <mat-icon>visibility</mat-icon>
+            <span>View</span>
+        </button>
+    </ng-template>
+</mat-menu>

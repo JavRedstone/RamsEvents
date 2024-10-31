@@ -1,0 +1,7 @@
+@import '@angular/material/theming';
+
+@mixin prizes-component-theme($accent-dark) {
+    .prizes-level {
+        color: $accent-dark;
+    }
+}

@@ -1,0 +1,10 @@
+<div class="home-wrapper">
+    <img class="home-logo" src="./assets/rams-events-logo.svg">
+    <h1 class="home-title">Rams Events</h1>
+    <p class="home-description">St. Robert's Best Event Tracking System</p>
+    <button class="home-enter" mat-button color="primary" (click) = "redirect('/rankings')" *ngIf="getAuth()">View rankings</button>
+    <div *ngIf="!getAuth()">
+        <h3 class="home-thanks">Thank you for using our Rams Events system!</h3>
+        <app-login class="home-signin">Sign in</app-login>
+    </div>
+</div>

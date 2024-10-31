@@ -1,0 +1,39 @@
+.clubs-title {
+    text-align: center;
+}
+
+.clubs-description {
+    text-align: center;
+}
+
+.clubs-icon {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    margin-left: 50%;
+    margin-top: 20px;
+    transform: translate(-50%);
+    font-size: 100px;
+    opacity: 0.3;
+}
+
+.clubs-form-field {
+    width: 325px;
+    margin: 12px;
+    margin-bottom: 0;
+}
+
+.clubs-table {
+    margin: 12px;
+}
+
+.clubs-nodata {
+    text-align: center;
+}
+
+.clubs-button {
+    height: 36px;
+    margin: 12px;
+    font-size: 18px;
+    border-radius: 18px !important;
+}

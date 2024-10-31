@@ -1,0 +1,43 @@
+.events-title {
+    text-align: center;
+}
+
+.events-description {
+    text-align: center;
+}
+
+.events-icon {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    margin-left: 50%;
+    margin-top: 20px;
+    transform: translate(-50%);
+    font-size: 100px;
+    opacity: 0.3;
+}
+
+.events-years {
+    text-align: center;
+}
+
+.events-form-field {
+    width: 325px;
+    margin: 12px;
+    margin-bottom: 0;
+}
+
+.events-table {
+    margin: 12px;
+}
+
+.events-nodata {
+    text-align: center;
+}
+
+.events-button {
+    height: 36px;
+    margin: 12px;
+    font-size: 18px;
+    border-radius: 18px !important;
+}

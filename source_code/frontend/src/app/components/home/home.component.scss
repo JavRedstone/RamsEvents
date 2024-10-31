@@ -1,0 +1,43 @@
+.home-wrapper {
+    height: 100vh;
+}
+
+.home-logo {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    margin-left: 50%;
+    margin-top: 45px;
+    transform: translate(-50%);
+}
+
+.home-title {
+    text-align: center;
+}
+
+.home-description {
+    text-align: center;
+}
+
+.home-thanks {
+    margin-top: 120px;
+    text-align: center;
+}
+
+.home-enter {
+    margin-left: 50%;
+    margin-top: 100px;
+    transform: translate(-50%);
+    text-decoration: underline;
+}
+
+.home-signin {
+    margin-left: calc(50% - 50px);
+}
+
+button {
+    height: 36px;
+    margin: 12px;
+    font-size: 18px;
+    border-radius: 18px !important;
+}
