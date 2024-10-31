@@ -1,4 +1,4 @@
-# RamsEvents Project [&copy; Javier Huang 2023]
+# RamsEvents Project [&copy; Javier 2023]
 
 ## General Structure
 
