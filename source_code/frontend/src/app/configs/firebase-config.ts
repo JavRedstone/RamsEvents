@@ -5,11 +5,11 @@
  */
 
 export default {
-    apiKey: "AIzaSyBeovUbd8XKd4pDTFOs7-iXSVg6kdZr2wQ",
+    apiKey: "abcdefghijklmnopqrstuvwxyz", // Fake API Key for security reasons
     authDomain: "rams-events.firebaseapp.com",
     projectId: "rams-events",
     storageBucket: "rams-events.appspot.com",
-    messagingSenderId: "893146574642",
-    appId: "1:893146574642:web:13bf858260940a615ef12b",
-    measurementId: "G-EN387LM0Z4"
+    messagingSenderId: "1234567890", // Fake Messaging Sender ID for security reasons
+    appId: "abcdefghijklmnopqrstuvwxyz", // Fake App ID for security reasons
+    measurementId: "G-1234567890" // Fake Measurement ID for security reasons
 }
